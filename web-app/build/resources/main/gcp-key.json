@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "infra3-demydenko-oleksii",
+  "private_key_id": "95ad587d9a6e1098fe2f74fa749f163abf168c35",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCWsiET6mrtwHt0\nBIkG9KEwzK0SJdofIJBTfzxPPvgYZtd0+g6e2QydfHQXzJorLkzmb6v66Cad62yR\neECoelHK/szD1+NHyVe/SmzvXxsMXAdAVrC/eKaQ0ApyT+AigAImH6yGkc/nheTh\nYYvGKWZ/aFrL8tAuryvasHueLEHkR2suv5sc5/Ask65aYs6JpNnwrigK4i4UAvPf\nzQ7Q3fQhWAbHsbdUy7kKZZltkOPiMVRhSunXIsqKGiaeE1kcHSDzdY/4OumyFxcB\niRV9N4zJNRmpwkHvDBHrJAZ8+mYxL6Djm9LCl+cJyK/uMkkrzH7stES+lgHQA+JL\np7MSzlFHAgMBAAECggEAAb9hAWmEg6Z6Nsy4JtstbQ6+r/CWaOHSPe+x/jXwaVmS\nHsUlzfnB3KFtN//YvoQXmC7vUn+o4+i8hJgE8ApQ8rCxET2IIti24xWekz+cAu9i\n8fzEtmWS2uAQmjsZss+Y1fZR/pQ70iJH+S42/a6u8e6pZsr6asqkACgNWZx6Kirt\n9/CFGvMA+oYL57By+vm2AkyUIPJUREM0zHlUXdZE/FDyvZ5s7f3Pt+wUJD/zZ9vQ\nO3SEmJk6sxQS8QT31rh8kFmTwOw1VnKq/3hAx7egAthWIE02md9TZke3Zx6SKhng\n0GPqZdUilkmZ2gYPuHxaZvrT6aDcJ3nw6ZF9DrsG8QKBgQDLR9NyDrfSio7Wh959\nkbcMl7QTCvv/PfycTWnUAhSSGWLki1SYiX3WkBvr9C0k/Leeswj+uI3wBqc2AG4o\nX+Bx2iC7W4QAiVjRPIWrPuxL40lW0XH3fTCJgcgakiOJgLoA6d+Y8AfXsPyW7cwd\nyz/brTSVr8B6VHUn7/AWZK5WdwKBgQC9xxqevQIXwUIuEWunHs/v2SpbIpgz3Kz1\n4WFK63ikDE6Q9GSoKAjQeAzTsrc4WM+wX6N1YKJh0FHVIdYmBcLBytTKBxyJ/lAb\nPRa2Ppbdje2t9k2PTr5FN0Pn2lWjHmIiXs7jVge3PQbm88ruSBYrYKoYv6i9Cv8E\nslbUF/z/sQKBgELntv45PeM721tciKwHg5nPbGNAIESX4EaJbCVtMdwMIvJZsVQr\nHJG8CJSWXy1nSAAhqPo9P+oaJnqtlZQQSkzuoAtKSZ3rlqH3K397TEaF3iOG992f\nBJSddIDaTHv7ND0MvJ0Xk104UUpTpfTAapog3cfOeqlIlu64F+sm5AJtAoGBAKW3\nk1tCGO29aJjpxWOt2E3NCNuEHfxLmw0qvda6QCKgTIrvnmXob6n66tiBmtStWM7e\n9NGujJ11V8ARR/rz1Nl80MuJ4jXtyO3ALnD9vqfBI+dgyOF3FVdDpxxy340NHwx8\nVZTWru4ncDuEb5QbhqBiTKZH1oUdcQsc4A1c1SRBAoGAP8gal1CS51ST0XLTw7SA\n/1IlQyVZL04hWBiDFpL0aYH5reDJsUGd5SkbGFdE52tNWJWde+c4vBFmQMx4+Suq\nMtaSGVokCJLZ8w+anPuevdf15vxLqlcEkvY0F/aBCUWStZSxU7w9SIqSV6A0OIN8\nrTMxjJ2hDTt1UDaD+tBmlXE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "image-to-text-api@infra3-demydenko-oleksii.iam.gserviceaccount.com",
+  "client_id": "117376648390654210209",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/image-to-text-api%40infra3-demydenko-oleksii.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}" />
+    <script th:src="@{/js/processImage.js}"></script>
+<!--    <script th:href="@{../static/js/pasteImg.js}"></script>-->
+
+</head>
+<body>
+
+<div class="container-fluid">
+
+    <div class="container col-md-4 mt-5 pt-3 pb-3">
+
+        <div class="alert alert-success" th:if="${processing}">
+            <i class="bi bi-hourglass-split"></i> <strong>File upload successful!</strong> The import is in progress.
+            <a th:href="${link}" th:text="'Click'" target="_blank">Click</a> to check the uploaded image.
+            Your text will be generated soon.
+        </div>
+
+        <div class="alert alert-warning" th:if="${wrongFile}">
+            <i class="bi bi-filetype-csv"></i> <strong>File should be in jpeg or png format!</strong> Try again.
+        </div>
+
+        <form id="img-import-form" th:action="@{/import}" method="POST" enctype="multipart/form-data">
+
+            <div class="mb-4">
+                <label for="img-import" class="form-label">Select an image to upload</label>
+                <input class="form-control" type="file" name="photo" id="img-import" accept="image/*" />
+            </div>
+
+            <div class="text-center pt-2">
+                <button type="submit" class="btn btn-md btn-outline-info">Import</button>
+            </div>
+
+        </form>
+
+        <input type="hidden" id="processing" th:value="${processing}" />
+        <input type="hidden" id="bucketName" th:value="${bucketName}" />
+        <input type="hidden" id="fileName" th:value="${fileName}" />
+
+    </div>
+
+</div>
+
+
+
+<script th:src="@{/webjars/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

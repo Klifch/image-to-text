@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         try {
             const response = await fetch(
-                `http://localhost:8081/api/text-from-image?bucket=${bucketName}&image=${fileName}`);
+                `http://app2-service:8081/api/text-from-image?bucket=${bucketName}&image=${fileName}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok. Could not reach the resource.');
             }

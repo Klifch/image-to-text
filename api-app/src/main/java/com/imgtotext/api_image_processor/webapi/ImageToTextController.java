@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/text-from-image")
-@CrossOrigin(origins = "http://localhost:8080") // Allowing only localhost:8080
+//@CrossOrigin(origins = "http://localhost:8080") // Allowing only localhost:8080
 public class ImageToTextController {
 
     private static final Logger logger = LoggerFactory.getLogger(GoogleCloudConfig.class);

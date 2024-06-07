@@ -10,8 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/text-from-image")
-//@CrossOrigin(origins = "http://localhost:8080") // Allowing only localhost:8080
+@RequestMapping("/api")
 public class ImageToTextController {
 
     private static final Logger logger = LoggerFactory.getLogger(GoogleCloudConfig.class);
@@ -22,11 +21,18 @@ public class ImageToTextController {
         this.visionService = visionService;
     }
 
-    @GetMapping
+    @GetMapping("/test")
+    public ResponseEntity<String> testEndpoint() {
+
+        return ResponseEntity.ok("It works, homie!");
+    }
+
+    @GetMapping("/text-from-image")
     public ResponseEntity<ImageResponseDto> imageToText(
             @RequestParam("bucket") String bucketName,
             @RequestParam("image") String imageName
     ) {
+        System.out.printf("YO IM ALIVE %s%n", imageName);
         logger.info("API call received with params: {} and {}", bucketName, imageName);
         try {
             AnnotateImageResponse response = visionService.extractTextFromImage(bucketName, imageName);

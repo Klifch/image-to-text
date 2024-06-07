@@ -4,11 +4,12 @@ document.addEventListener("DOMContentLoaded", async function () {
     if (processing) {
         const bucketName = document.getElementById("bucketName").value;
         const fileName = document.getElementById("fileName").value;
-        // const apiUrl = `http://localhost:8081/api/text-from-image?bucket=${bucketName}&image=${fileName}`;
+
+        const encodedBucketName = encodeURIComponent(bucketName);
+        const encodedFileName = encodeURIComponent(fileName);
 
         try {
-            const response = await fetch(
-                `http://app2-service:8081/api/text-from-image?bucket=${bucketName}&image=${fileName}`);
+            const response = await fetch(`/proxy/text-from-image?bucket=${encodedBucketName}&image=${encodedFileName}`)
             if (!response.ok) {
                 throw new Error('Network response was not ok. Could not reach the resource.');
             }

@@ -1,0 +1,102 @@
+# .gitlab-ci.yml
+
+stages:
+  - build
+  - package
+  - push
+  - deploy
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+build_app1:
+  stage: build
+  script:
+    - cd web-app
+    - ./gradlew clean bootJar
+  artifacts:
+    paths:
+      - web-app/build/libs/
+  rules:
+    - changes:
+      - web-app/**/*
+
+build_app2:
+  stage: build
+  script:
+    - cd api-app
+    - ./gradlew clean bootJar
+  artifacts:
+    paths:
+      - api-app/build/libs/
+  rules:
+    - changes:
+      - api-app/**/*
+
+package_app1:
+  stage: package
+  identity: google_cloud
+  script:
+    - cd web-app
+    - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG .
+  needs:
+    - build_app1
+  rules:
+    - changes:
+      - web-app/**/*
+
+package_app2:
+  stage: package
+  identity: google_cloud
+  script:
+    - cd api-app
+    - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG .
+  needs:
+    - build_app2
+  rules:
+    - changes:
+      - api-app/**/*
+
+push_app1:
+  stage: push
+  identity: google_cloud
+  script:
+    - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG
+  needs:
+    - package_app1
+  rules:
+    - changes:
+      - web-app/**/*
+
+push_app2:
+  stage: push
+  identity: google_cloud
+  script:
+    - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG
+  needs:
+    - package_app2
+  rules:
+    - changes:
+      - api-app/**/*
+
+deploy_app1:
+  stage: deploy
+  identity: google_cloud
+  script:
+    - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
+    - kubectl apply -f web-app/app1-deployment.yaml
+  only:
+    - main
+  needs:
+    - push_app1
+
+deploy_app2:
+  stage: deploy
+  identity: google_cloud
+  script:
+    - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
+    - kubectl apply -f api-app/app2-deployment.yaml
+  only:
+    - main
+  needs:
+    - push_app2

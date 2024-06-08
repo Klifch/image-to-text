@@ -11,6 +11,7 @@ variables:
 
 build_app1:
   stage: build
+  image: eclipse-temurin:17.0.3_7-jdk-jammy
   script:
     - cd web-app
     - ./gradlew clean bootJar
@@ -60,6 +61,7 @@ deploy_app1:
 
 build_app2:
   stage: build
+  image: eclipse-temurin:17.0.3_7-jdk-jammy
   script:
     - cd api-app
     - ./gradlew clean bootJar

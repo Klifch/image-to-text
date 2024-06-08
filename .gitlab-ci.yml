@@ -25,6 +25,7 @@ build_app1:
 
 package_app1:
   stage: package
+  image: docker:stable
   needs:
     - build_app1
   identity: google_cloud
@@ -38,6 +39,7 @@ package_app1:
 
 push_app1:
   stage: push
+  image: docker:stable
   needs:
     - package_app1
   identity: google_cloud
@@ -89,6 +91,7 @@ build_app2:
 
 package_app2:
   stage: package
+  image: docker:stable
   needs:
     - build_app2
   identity: google_cloud
@@ -113,6 +116,7 @@ package_app2:
 
 push_app2:
   stage: push
+  image: docker:stable
   needs:
     - package_app2
   identity: google_cloud

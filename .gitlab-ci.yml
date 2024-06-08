@@ -38,6 +38,7 @@ package_app1:
   identity: google_cloud
   script:
     - cd web-app
+    - docker images
     - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG .
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
@@ -56,6 +57,8 @@ push_app1:
     DOCKER_TLS_CERTDIR: ""
   identity: google_cloud
   script:
+    - cd web-app
+    - docker images
     - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'

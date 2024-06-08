@@ -52,8 +52,6 @@ deploy_app1:
   script:
     - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
     - kubectl apply -f web-app/app1-deployment.yaml
-  only:
-    - main
   rules:
     - changes:
       - web-app/**/*

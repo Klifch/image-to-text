@@ -54,6 +54,9 @@ deploy_app1:
     - kubectl apply -f web-app/app1-deployment.yaml
   only:
     - main
+  rules:
+    - changes:
+      - web-app/**/*
 
 build_app2:
   stage: build
@@ -134,3 +137,6 @@ deploy_app2:
     - kubectl apply -f api-app/app2-deployment.yaml
   only:
     - main
+  rules:
+    - changes:
+      - api-app/**/*

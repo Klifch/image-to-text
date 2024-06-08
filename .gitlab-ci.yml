@@ -23,37 +23,37 @@ build_app1:
 
 package_app1:
   stage: package
+  needs:
+    - build_app1
   identity: google_cloud
   script:
     - cd web-app
     - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG .
-  needs:
-    - build_app1
   rules:
     - changes:
       - web-app/**/*
 
 push_app1:
   stage: push
+  needs:
+    - package_app1
   identity: google_cloud
   script:
     - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG
-  needs:
-    - package_app1
   rules:
     - changes:
       - web-app/**/*
 
 deploy_app1:
   stage: deploy
+  needs:
+    - push_app1
   identity: google_cloud
   script:
     - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
     - kubectl apply -f web-app/app1-deployment.yaml
   only:
     - main
-  needs:
-    - push_app1
 
 build_app2:
   stage: build
@@ -81,12 +81,12 @@ build_app2:
 
 package_app2:
   stage: package
+  needs:
+    - build_app2
   identity: google_cloud
   script:
     - cd api-app
     - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG .
-  needs:
-    - build_app2
   rules:
     - changes:
       - api-app/**/*
@@ -104,11 +104,11 @@ package_app2:
 
 push_app2:
   stage: push
+  needs:
+    - package_app2
   identity: google_cloud
   script:
     - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG
-  needs:
-    - package_app2
   rules:
     - changes:
       - api-app/**/*
@@ -126,11 +126,11 @@ push_app2:
 
 deploy_app2:
   stage: deploy
+  needs:
+    - push_app2
   identity: google_cloud
   script:
     - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
     - kubectl apply -f api-app/app2-deployment.yaml
   only:
     - main
-  needs:
-    - push_app2

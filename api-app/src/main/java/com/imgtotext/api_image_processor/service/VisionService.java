@@ -3,15 +3,10 @@ package com.imgtotext.api_image_processor.service;
 import com.google.cloud.spring.vision.CloudVisionTemplate;
 import com.google.cloud.storage.Blob;
 import com.google.cloud.storage.Storage;
-import com.google.cloud.storage.StorageOptions;
 import com.google.cloud.vision.v1.*;
-import com.google.protobuf.ByteString;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 
 @Service
 public class VisionService {

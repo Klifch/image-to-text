@@ -33,7 +33,7 @@ public class ImageToTextController {
             @RequestParam("bucket") String bucketName,
             @RequestParam("image") String imageName
     ) {
-//        System.out.printf("YO IM ALIVE %s%n", imageName);
+
         logger.info("API call received with params: {} and {}", bucketName, imageName);
         try {
             AnnotateImageResponse response = visionService.extractTextFromImage(bucketName, imageName);

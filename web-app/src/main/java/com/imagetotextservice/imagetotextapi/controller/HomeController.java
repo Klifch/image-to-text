@@ -38,9 +38,7 @@ public class HomeController {
             Model model
     ) throws IOException {
 
-        String filename = image.getOriginalFilename();
         String mimeType = image.getContentType();
-        System.out.println(mimeType);
 
         if (mimeType.equals("image/jpeg") || mimeType.equals("image/png")) {
             model.addAttribute("wrongFile", false);

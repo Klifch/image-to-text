@@ -26,16 +26,17 @@ build_app1:
 
 package_and_push_app1:
   stage: package
-  image: docker:stable
+  image: gcr.io/google.com/cloudsdktool/google-cloud-cli:466.0.0-alpine
   needs:
     - build_app1
   services:
-    - docker:dind
+    - docker:24.0.5-dind
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
   identity: google_cloud
   before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - gcloud auth configure-docker $GOOGLE_ARTIFACT_REGISTRY_REPOSITORY_LOCATION-docker.pkg.dev
   script:
     - cd web-app

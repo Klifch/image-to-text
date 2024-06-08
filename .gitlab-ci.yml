@@ -75,7 +75,6 @@ deploy_app1:
     - package_and_push_app1
   identity: google_cloud
   script:
-    - gcloud components install gke-gcloud-auth-plugin
     - gcloud container clusters get-credentials $CLUSTER_NAME --zone=$CLUSTER_ZONE --project=$PROJECT_ID
     - kubectl apply -f web-app/app1-deployment.yaml
   rules:
@@ -111,19 +110,21 @@ build_app2:
 
 package_and_push_app2:
   stage: package
-  image: docker:stable
+  image: gcr.io/google.com/cloudsdktool/google-cloud-cli:466.0.0-alpine
   needs:
     - build_app2
   services:
-    - docker:dind
+    - docker:24.0.5-dind
   variables:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
   identity: google_cloud
   before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - gcloud auth configure-docker $GOOGLE_ARTIFACT_REGISTRY_REPOSITORY_LOCATION-docker.pkg.dev
   script:
-    - cd api-app
+    - cd web-app
+    - docker images
     - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG .
     - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG
   rules:

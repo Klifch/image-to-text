@@ -133,8 +133,6 @@ deploy_app2:
   script:
     - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
     - kubectl apply -f api-app/app2-deployment.yaml
-  only:
-    - main
   rules:
     - changes:
       - api-app/**/*

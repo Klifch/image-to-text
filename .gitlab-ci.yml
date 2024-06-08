@@ -75,7 +75,8 @@ deploy_app1:
     - package_and_push_app1
   identity: google_cloud
   script:
-    - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
+    - gcloud components install gke-gcloud-auth-plugin
+    - gcloud container clusters get-credentials $CLUSTER_NAME --zone=$CLUSTER_ZONE --project=$PROJECT_ID
     - kubectl apply -f web-app/app1-deployment.yaml
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'

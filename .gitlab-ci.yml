@@ -3,7 +3,6 @@
 stages:
   - build
   - package
-  - push
   - deploy
 
 variables:
@@ -25,7 +24,7 @@ build_app1:
     - changes:
       - web-app/**/*
 
-package_app1:
+package_and_push_app1:
   stage: package
   image: docker:stable
   needs:
@@ -40,35 +39,36 @@ package_app1:
     - cd web-app
     - docker images
     - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG .
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-    - changes:
-      - web-app/**/*
-
-push_app1:
-  stage: push
-  image: docker:stable
-  needs:
-    - package_app1
-  services:
-    - docker:dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
-  identity: google_cloud
-  script:
-    - cd web-app
-    - docker images
     - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
       - web-app/**/*
 
+# push_app1:
+#   stage: push
+#   image: docker:stable
+#   needs:
+#     - package_app1
+#   services:
+#     - docker:dind
+#   variables:
+#     DOCKER_HOST: tcp://docker:2375
+#     DOCKER_TLS_CERTDIR: ""
+#   identity: google_cloud
+#   script:
+#     - cd web-app
+#     - docker images
+#     - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "main"'
+#     - changes:
+#       - web-app/**/*
+
 deploy_app1:
   stage: deploy
   needs:
-    - push_app1
+    - package_and_push_app1
   identity: google_cloud
   script:
     - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
@@ -104,7 +104,7 @@ build_app2:
 #     - changes:
 #       - web-app/**/*
 
-package_app2:
+package_and_push_app2:
   stage: package
   image: docker:stable
   needs:
@@ -118,6 +118,7 @@ package_app2:
   script:
     - cd api-app
     - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG .
+    - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
@@ -134,23 +135,23 @@ package_app2:
 #     - changes:
 #       - web-app/**/*
 
-push_app2:
-  stage: push
-  image: docker:stable
-  needs:
-    - package_app2
-  services:
-    - docker:dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
-    DOCKER_TLS_CERTDIR: ""
-  identity: google_cloud
-  script:
-    - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-    - changes:
-      - api-app/**/*
+# push_app2:
+#   stage: push
+#   image: docker:stable
+#   needs:
+#     - package_app2
+#   services:
+#     - docker:dind
+#   variables:
+#     DOCKER_HOST: tcp://docker:2375
+#     DOCKER_TLS_CERTDIR: ""
+#   identity: google_cloud
+#   script:
+#     - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG
+#   rules:
+#     - if: '$CI_COMMIT_BRANCH == "main"'
+#     - changes:
+#       - api-app/**/*
 
 # deploy_app1:
 #   stage: deploy
@@ -166,7 +167,7 @@ push_app2:
 deploy_app2:
   stage: deploy
   needs:
-    - push_app2
+    - package_and_push_app2
   identity: google_cloud
   script:
     - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE

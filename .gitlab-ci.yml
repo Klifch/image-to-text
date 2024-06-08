@@ -19,6 +19,7 @@ build_app1:
     paths:
       - web-app/build/libs/
   rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
       - web-app/**/*
 
@@ -31,6 +32,7 @@ package_app1:
     - cd web-app
     - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG .
   rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
       - web-app/**/*
 
@@ -42,6 +44,7 @@ push_app1:
   script:
     - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app1:$IMAGE_TAG
   rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
       - web-app/**/*
 
@@ -53,9 +56,8 @@ deploy_app1:
   script:
     - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
     - kubectl apply -f web-app/app1-deployment.yaml
-  only:
-    - main
   rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
       - web-app/**/*
 
@@ -69,6 +71,7 @@ build_app2:
     paths:
       - api-app/build/libs/
   rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
       - api-app/**/*
 
@@ -93,6 +96,7 @@ package_app2:
     - cd api-app
     - docker build -t europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG .
   rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
       - api-app/**/*
 
@@ -115,6 +119,7 @@ push_app2:
   script:
     - docker push europe-west1-docker.pkg.dev/$PROJECT_ID/$REPO_NAME/app2:$IMAGE_TAG
   rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
       - api-app/**/*
 
@@ -137,8 +142,7 @@ deploy_app2:
   script:
     - gcloud container clusters get-credentials $CLUSTER_NAME --zone $CLUSTER_ZONE
     - kubectl apply -f api-app/app2-deployment.yaml
-  only:
-    - main
   rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
       - api-app/**/*

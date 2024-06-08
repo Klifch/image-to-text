@@ -70,6 +70,7 @@ package_and_push_app1:
 
 deploy_app1:
   stage: deploy
+  image: google/cloud-sdk
   needs:
     - package_and_push_app1
   identity: google_cloud
